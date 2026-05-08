@@ -1,0 +1,7 @@
+{
+    "$schema": "https://openapi.vercel.sh/vercel.json",
+    "installCommand": "yarn workspaces focus @trezor/suite-web @trezor/suite-data @trezor/suite-build",
+    "buildCommand": "yarn message-system-sign-config && yarn workspace @trezor/suite-data build:lib && yarn suite:build:web",
+    "outputDirectory": "packages/suite-web/build",
+    "framework": null
+}
