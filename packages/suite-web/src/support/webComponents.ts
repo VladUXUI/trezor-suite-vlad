@@ -13,6 +13,11 @@ export const webComponents: Record<PageName, LazyExoticComponent<ComponentType>>
             default: Earn,
         })),
     ),
+    'suite-accounts': lazy(() =>
+        import(/* webpackChunkName: "accounts" */ 'src/views/accounts/index').then(
+            ({ Accounts }) => ({ default: Accounts }),
+        ),
+    ),
     'earn-supply': lazy(() =>
         import(/* webpackChunkName: "earn" */ 'src/views/earn/supply/index').then(
             ({ EarnSupply }) => ({
@@ -179,5 +184,10 @@ export const webComponents: Record<PageName, LazyExoticComponent<ComponentType>>
         import(
             /* webpackChunkName: "settings" */ 'src/views/settings/SettingsConnectedApps/SettingsConnectedApps'
         ).then(({ SettingsConnectedApps }) => ({ default: SettingsConnectedApps })),
+    ),
+    'settings-address-book': lazy(() =>
+        import(
+            /* webpackChunkName: "settings" */ 'src/views/settings/SettingsAddressBook/SettingsAddressBook'
+        ).then(({ SettingsAddressBook }) => ({ default: SettingsAddressBook })),
     ),
 };

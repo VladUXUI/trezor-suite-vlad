@@ -17,6 +17,38 @@ export const SETTINGS_ROUTES: Route['name'][] = [
     'settings-coins',
     'settings-debug',
     'settings-connected-apps',
+    'settings-address-book',
+] as const;
+
+export const WALLET_ROUTES: Route['name'][] = [
+    'wallet-index',
+    'wallet-send',
+    'wallet-receive',
+    'wallet-staking',
+    'wallet-tokens',
+    'wallet-tokens-hidden',
+    'wallet-tokens-inactive',
+    'wallet-tokens-defi',
+    'wallet-nfts',
+    'wallet-nfts-hidden',
+    'wallet-details',
+    'wallet-sign-verify',
+    'wallet-anonymize',
+    'wallet-trading-buy',
+    'wallet-trading-buy-offers',
+    'wallet-trading-buy-detail',
+    'wallet-trading-buy-confirm',
+    'wallet-trading-sell',
+    'wallet-trading-sell-offers',
+    'wallet-trading-sell-detail',
+    'wallet-trading-sell-confirm',
+    'wallet-trading-exchange',
+    'wallet-trading-exchange-offers',
+    'wallet-trading-exchange-detail',
+    'wallet-trading-exchange-confirm',
+    'wallet-trading-redirect',
+    'wallet-trading-transactions',
+    'wallet-trading-concierge',
 ] as const;
 
 type NavigationProps = {
@@ -39,6 +71,12 @@ export const Navigation = ({ children }: NavigationProps) => {
                     icon: 'house',
                     goToRoute: startRoute,
                     routes: [startRoute],
+                },
+                {
+                    nameId: 'TR_WALLET',
+                    icon: 'wallet',
+                    goToRoute: 'suite-accounts',
+                    routes: ['suite-accounts', ...WALLET_ROUTES],
                 },
                 ...(!isBtcOnly
                     ? [

@@ -9,6 +9,7 @@ export type { DesktopApi, MainChannels, RendererChannels, InvokeChannels } from 
 export type { SendMethod, ListenerMethod, InvokeMethod, HandleMethod } from './methods';
 export type { StrictIpcMain, StrictIpcRenderer, StrictBrowserWindow } from './ipc';
 export type {
+    AddressBookEntry,
     SuiteThemeVariant,
     UpdateInfo,
     UpdateProgress,

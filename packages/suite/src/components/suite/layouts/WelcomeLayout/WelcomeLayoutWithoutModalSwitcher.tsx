@@ -66,7 +66,6 @@ export type WelcomeLayoutWithoutModalSwitcherProps = {
     children: ReactNode;
     showPureChildren?: boolean;
     hideSidebar?: boolean;
-    showAccounts?: boolean;
 };
 
 type RightContentProps = {
@@ -113,7 +112,6 @@ export const WelcomeLayoutWithoutModalSwitcher = ({
     children,
     hideSidebar,
     showPureChildren = false,
-    showAccounts = true,
 }: WelcomeLayoutWithoutModalSwitcherProps) => {
     const theme = useSelector(selectThemeSettings);
 
@@ -129,7 +127,7 @@ export const WelcomeLayoutWithoutModalSwitcher = ({
                     <Modal.Provider>
                         {!hideSidebar ? (
                             <ElevationDown>
-                                <Sidebar showAccounts={showAccounts} />
+                                <Sidebar />
                             </ElevationDown>
                         ) : null}
                         <MainContent>

@@ -2,6 +2,7 @@ import { type ComponentType } from 'react';
 
 import { type PageName } from '@suite/router';
 
+import { Accounts } from 'src/views/accounts';
 import { ConnectPopup } from 'src/views/connect-popup';
 import { Dashboard } from 'src/views/dashboard';
 import { Earn } from 'src/views/earn';
@@ -9,6 +10,7 @@ import { EarnClaim } from 'src/views/earn/claim';
 import { EarnSupply } from 'src/views/earn/supply';
 import { EarnWithdraw } from 'src/views/earn/withdraw';
 import PasswordManagerView from 'src/views/password-manager';
+import { SettingsAddressBook } from 'src/views/settings/SettingsAddressBook/SettingsAddressBook';
 import { SettingsCoins } from 'src/views/settings/SettingsCoins/SettingsCoins';
 import { SettingsConnectedApps } from 'src/views/settings/SettingsConnectedApps/SettingsConnectedApps';
 import { SettingsDebug } from 'src/views/settings/SettingsDebug/SettingsDebug';
@@ -43,6 +45,7 @@ import { Transactions } from 'src/views/wallet/transactions/Transactions';
 export const desktopComponents: Record<PageName, ComponentType> = {
     'suite-index': Dashboard,
     'suite-earn': Earn,
+    'suite-accounts': Accounts,
     'earn-supply': EarnSupply,
     'earn-withdraw': EarnWithdraw,
     'earn-claim': EarnClaim,
@@ -81,4 +84,5 @@ export const desktopComponents: Record<PageName, ComponentType> = {
     'settings-debug': SettingsDebug,
     'settings-device': SettingsDevice,
     'settings-connected-apps': SettingsConnectedApps,
+    'settings-address-book': SettingsAddressBook,
 };

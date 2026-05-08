@@ -4855,7 +4855,7 @@ export const messages = defineMessages({
     },
     TR_DASHBOARD: {
         id: 'TR_DASHBOARD',
-        defaultMessage: 'Dashboard',
+        defaultMessage: 'Dashboard (Vlad Build)',
     },
     TR_EARN: {
         id: 'TR_EARN',
@@ -11761,5 +11761,69 @@ export const messages = defineMessages({
     MEMO_SWITCH: {
         id: 'MEMO_SWITCH',
         defaultMessage: 'Add memo',
+    },
+    TR_ADDRESS_BOOK: {
+        id: 'TR_ADDRESS_BOOK',
+        defaultMessage: 'Address Book',
+    },
+    TR_ADD_CONTACT: {
+        id: 'TR_ADD_CONTACT',
+        defaultMessage: 'Add contact',
+    },
+    TR_EDIT_CONTACT: {
+        id: 'TR_EDIT_CONTACT',
+        defaultMessage: 'Edit contact',
+    },
+    TR_DELETE_CONTACT: {
+        id: 'TR_DELETE_CONTACT',
+        defaultMessage: 'Delete contact',
+    },
+    TR_ADDRESS_BOOK_DESCRIPTION: {
+        id: 'TR_ADDRESS_BOOK_DESCRIPTION',
+        defaultMessage: 'Save frequently used addresses for quick access when sending funds.',
+    },
+    TR_ADDRESS_BOOK_EMPTY_TITLE: {
+        id: 'TR_ADDRESS_BOOK_EMPTY_TITLE',
+        defaultMessage: 'No saved contacts yet',
+    },
+    TR_ADDRESS_BOOK_EMPTY_DESCRIPTION: {
+        id: 'TR_ADDRESS_BOOK_EMPTY_DESCRIPTION',
+        defaultMessage: 'Save addresses with labels to quickly select them when sending.',
+    },
+    TR_ADDRESS_BOOK_SEARCH_PLACEHOLDER: {
+        id: 'TR_ADDRESS_BOOK_SEARCH_PLACEHOLDER',
+        defaultMessage: 'Search by name or address',
+    },
+    TR_CONTACT_LABEL: {
+        id: 'TR_CONTACT_LABEL',
+        defaultMessage: 'Label',
+    },
+    TR_CONTACT_ADDRESS: {
+        id: 'TR_CONTACT_ADDRESS',
+        defaultMessage: 'Address',
+    },
+    TR_CONTACT_NETWORK: {
+        id: 'TR_CONTACT_NETWORK',
+        defaultMessage: 'Network',
+    },
+    TR_CONTACT_NOTE: {
+        id: 'TR_CONTACT_NOTE',
+        defaultMessage: 'Note (optional)',
+    },
+    TR_ADDRESS_BOOK_DUPLICATE_WARNING: {
+        id: 'TR_ADDRESS_BOOK_DUPLICATE_WARNING',
+        defaultMessage: 'This address is already saved as "{label}". Save anyway?',
+    },
+    TR_SAVE_TO_ADDRESS_BOOK: {
+        id: 'TR_SAVE_TO_ADDRESS_BOOK',
+        defaultMessage: 'Save to address book',
+    },
+    TR_DELETE_CONTACT_CONFIRM: {
+        id: 'TR_DELETE_CONTACT_CONFIRM',
+        defaultMessage: 'Are you sure you want to delete "{label}"?',
+    },
+    TR_ADDRESS_BOOK_LABEL_HINT: {
+        id: 'TR_ADDRESS_BOOK_LABEL_HINT',
+        defaultMessage: 'Label: {label}',
     },
 } as const);

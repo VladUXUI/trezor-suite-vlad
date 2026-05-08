@@ -38,9 +38,11 @@ import { capitalizeFirstLetter } from '@trezor/utils';
 import { AddressLabeling, Labeling } from 'src/components/suite';
 import { InputError } from 'src/components/wallet';
 import { type InputErrorProps } from 'src/components/wallet/InputError';
+import { ContactPicker } from 'src/components/wallet/send/ContactPicker';
 import { useDispatch, useSelector } from 'src/hooks/suite';
 import { useSendFormContext } from 'src/hooks/wallet';
 import { useAnalytics } from 'src/support/useAnalytics';
+import { type AddressBookEntry } from 'src/types/addressBook';
 import { getProtocolInfo } from 'src/utils/suite/protocol';
 import { captureSentryMessage } from 'src/utils/suite/sentry';
 
@@ -57,6 +59,7 @@ export const Address = ({ output, outputId, outputsCount }: AddressProps) => {
         useState<ReturnType<typeof isAddressDeprecated>>(undefined);
     const [hasAddressChecksummed, setHasAddressChecksummed] = useState<boolean | undefined>();
     const [autocorrectMessage, setAutocorrectMessage] = useState<string | undefined>();
+    const [selectedContact, setSelectedContact] = useState<AddressBookEntry | undefined>();
     const autocorrectTimeout = useRef<TimerId>(null);
     const dispatch = useDispatch();
     const { device } = useDevice();
@@ -93,6 +96,12 @@ export const Address = ({ output, outputId, outputsCount }: AddressProps) => {
     const broadcastEnabled = options.includes('broadcast');
     const isOnline = useSelector(state => state.suite.online);
     const isDebug = useSelector(selectIsDebugModeActive);
+
+    const handleContactSelect = (entry: AddressBookEntry) => {
+        setSelectedContact(entry);
+        setValue(inputName, entry.address, { shouldValidate: true });
+        trigger(inputName);
+    };
 
     const [isExternalAddressCheckWarningDismissed, setIsExternalAddressCheckWarningDismissed] =
         useState(false);
@@ -486,78 +495,99 @@ export const Address = ({ output, outputId, outputsCount }: AddressProps) => {
     };
 
     return (
-        <Input
-            hasError={!!addressError}
-            rightContent={<Icon name="qrCode" onClick={handleQrClick} />}
-            label={<Translation id="RECIPIENT_ADDRESS" />}
-            labelLeft={
-                <Translation
-                    id={outputsCount > 1 ? 'TR_SEND_RECIPIENT_ADDRESS' : 'TR_SEND_ADDRESS_SECTION'}
-                    values={{ index: recipientId }}
-                />
-            }
-            labelRight={
-                <Row gap={spacings.md}>
-                    {isDebug && <DevSelfAddress outputId={outputId} account={account} />}
-                    {metadataEnabled && broadcastEnabled && (
-                        <Text typographyStyle="body-sm" as="div">
-                            <Labeling
-                                deviceStaticSessionId={device.state.staticSessionId}
-                                displayValue={
-                                    <Text typographyStyle="body-sm-strong">
-                                        <Translation id="TR_LABELING_ADD_LABEL" />
-                                    </Text>
-                                }
-                                isAlwaysActive
-                                gap={10}
-                                placeholder={translationString('TR_LABELING_OUTPUT_LABEL')}
-                                payload={{
-                                    type: 'outputLabel',
-                                    entityKey: account.key,
-                                    // txid is not known at this moment. metadata is only saved
-                                    // along with other sendForm data and processed in sendFormActions.
-                                    txid: 'will-be-replaced',
-                                    outputIndex: `${outputId}`,
-                                    defaultValue: `${outputId}`,
-                                    value: label,
-                                    networkSymbol: symbol,
-                                    accountDescriptor: descriptor,
-                                }}
-                                maxWidth={300}
-                                onSubmit={value => {
-                                    setValue(`outputs.${outputId}.label`, value || '');
-                                    setDraftSaveRequest(true);
-
-                                    return Promise.resolve(true);
-                                }}
-                            >
-                                {label}
-                            </Labeling>
-                        </Text>
-                    )}
-                    {outputsCount > 1 && (
-                        <IconButton
-                            icon="x"
-                            intent="neutral"
-                            size="small"
-                            priority="secondary"
-                            data-testid={`outputs.${outputId}.remove`}
-                            onClick={() => {
-                                removeOutput(outputId);
-                                // compose by first Output
-                                composeTransaction();
-                            }}
+        <>
+            {selectedContact && (
+                <Row gap={spacings.xs}>
+                    <Text typographyStyle="hint" color="textSubdued">
+                        <Translation
+                            id="TR_ADDRESS_BOOK_LABEL_HINT"
+                            values={{ label: selectedContact.label }}
                         />
-                    )}
+                    </Text>
                 </Row>
-            }
-            bottomText={getBottomText()}
-            bottomTextIconComponent={getBottomTextIconComponent()}
-            data-testid={inputName}
-            defaultValue={addressValue}
-            maxLength={formInputsMaxLength.address}
-            innerRef={inputRef}
-            {...inputField}
-        />
+            )}
+            <Input
+                hasError={!!addressError}
+                rightContent={
+                    <Row gap={spacings.xs}>
+                        <ContactPicker coin={symbol} onSelect={handleContactSelect} />
+                        <Icon name="qrCode" onClick={handleQrClick} />
+                    </Row>
+                }
+                label={<Translation id="RECIPIENT_ADDRESS" />}
+                labelLeft={
+                    <Translation
+                        id={
+                            outputsCount > 1
+                                ? 'TR_SEND_RECIPIENT_ADDRESS'
+                                : 'TR_SEND_ADDRESS_SECTION'
+                        }
+                        values={{ index: recipientId }}
+                    />
+                }
+                labelRight={
+                    <Row gap={spacings.md}>
+                        {isDebug && <DevSelfAddress outputId={outputId} account={account} />}
+                        {metadataEnabled && broadcastEnabled && (
+                            <Text typographyStyle="body-sm" as="div">
+                                <Labeling
+                                    deviceStaticSessionId={device.state.staticSessionId}
+                                    displayValue={
+                                        <Text typographyStyle="body-sm-strong">
+                                            <Translation id="TR_LABELING_ADD_LABEL" />
+                                        </Text>
+                                    }
+                                    isAlwaysActive
+                                    gap={10}
+                                    placeholder={translationString('TR_LABELING_OUTPUT_LABEL')}
+                                    payload={{
+                                        type: 'outputLabel',
+                                        entityKey: account.key,
+                                        // txid is not known at this moment. metadata is only saved
+                                        // along with other sendForm data and processed in sendFormActions.
+                                        txid: 'will-be-replaced',
+                                        outputIndex: `${outputId}`,
+                                        defaultValue: `${outputId}`,
+                                        value: label,
+                                        networkSymbol: symbol,
+                                        accountDescriptor: descriptor,
+                                    }}
+                                    maxWidth={300}
+                                    onSubmit={value => {
+                                        setValue(`outputs.${outputId}.label`, value || '');
+                                        setDraftSaveRequest(true);
+
+                                        return Promise.resolve(true);
+                                    }}
+                                >
+                                    {label}
+                                </Labeling>
+                            </Text>
+                        )}
+                        {outputsCount > 1 && (
+                            <IconButton
+                                icon="x"
+                                intent="neutral"
+                                size="small"
+                                priority="secondary"
+                                data-testid={`outputs.${outputId}.remove`}
+                                onClick={() => {
+                                    removeOutput(outputId);
+                                    // compose by first Output
+                                    composeTransaction();
+                                }}
+                            />
+                        )}
+                    </Row>
+                }
+                bottomText={getBottomText()}
+                bottomTextIconComponent={getBottomTextIconComponent()}
+                data-testid={inputName}
+                defaultValue={addressValue}
+                maxLength={formInputsMaxLength.address}
+                innerRef={inputRef}
+                {...inputField}
+            />
+        </>
     );
 };

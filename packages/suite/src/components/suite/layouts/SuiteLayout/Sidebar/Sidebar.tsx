@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 import { suiteSettingsActions } from '@suite/settings';
-import { selectDevicesCount, selectSelectedDevice } from '@suite-common/device';
+import { selectDevicesCount } from '@suite-common/device';
 import { Box, ElevationUp, Icon, ResizableBox, useElevation } from '@trezor/components';
 import { isDesktop } from '@trezor/env-utils';
 import { TrezorLogo } from '@trezor/product-components';
@@ -16,9 +16,7 @@ import {
 } from '@trezor/theme';
 
 import { TrafficLightOffset } from 'src/components/suite/TrafficLightOffset';
-import { AccountsMenu } from 'src/components/wallet/WalletLayout/AccountsMenu/AccountsMenu';
 import { useDispatch, useSelector } from 'src/hooks/suite';
-import { selectShouldDisplayDeviceCompromised } from 'src/selectors/suite/suiteAuthenticityChecksSelectors';
 import { useResponsiveContext } from 'src/support/suite/ResponsiveContext';
 
 import { Navigation } from './Navigation';
@@ -83,11 +81,7 @@ const WalletSwitcher = ({ isCollapsed }: WalletSwitcherProps) => {
     );
 };
 
-type SidebarProps = {
-    showAccounts?: boolean;
-};
-
-export const Sidebar = ({ showAccounts = true }: SidebarProps) => {
+export const Sidebar = () => {
     const {
         isSidebarCollapsed,
         setSidebarWidth,
@@ -106,9 +100,6 @@ export const Sidebar = ({ showAccounts = true }: SidebarProps) => {
     const dispatch = useDispatch();
 
     const { elevation } = useElevation();
-
-    const shouldDisplayDeviceCompromised = useSelector(selectShouldDisplayDeviceCompromised);
-    const selectedDevice = useSelector(selectSelectedDevice);
 
     const handleSidebarWidthChanged = (width: number) => {
         setSidebarWidth(width);
@@ -131,12 +122,6 @@ export const Sidebar = ({ showAccounts = true }: SidebarProps) => {
 
         return () => window.removeEventListener('resize', onResize);
     }, [setAutoCollapseSuppressed]);
-
-    const showAccountsAndIsDeviceReady =
-        !shouldDisplayDeviceCompromised &&
-        selectedDevice !== undefined &&
-        selectedDevice.mode === 'normal' &&
-        showAccounts;
 
     useEffect(() => {
         if (contentWidth == null) return;
@@ -203,9 +188,7 @@ export const Sidebar = ({ showAccounts = true }: SidebarProps) => {
                             <ElevationUp>
                                 <Navigation />
                             </ElevationUp>
-                            <HorizontalSpacer>
-                                {showAccountsAndIsDeviceReady && <AccountsMenu />}
-                            </HorizontalSpacer>
+                            <HorizontalSpacer />
                             {!isSidebarCollapsed && <SidebarBanners />}
                             <QuickActions isSidebarCollapsed={isSidebarCollapsed} />
                         </Content>

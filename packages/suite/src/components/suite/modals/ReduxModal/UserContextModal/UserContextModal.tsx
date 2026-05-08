@@ -21,6 +21,7 @@ import { ConfirmXpubModal } from '../ConfirmXpubModal';
 import { CopyAddressModal } from '../CopyAddressModal';
 import { ActivateAssetsModal } from './ActivateAssetsModal';
 import { AddAccountModal } from './AddAccountModal/AddAccountModal';
+import { AddContactModal } from './AddContactModal';
 import { AddTokenModal } from './AddTokenModal';
 import type { ReduxModalProps } from '../ReduxModalProps';
 import { AdvancedCoinSettingsModal } from './AdvancedCoinSettingsModal/AdvancedCoinSettingsModal';
@@ -40,6 +41,7 @@ import { ConnectErrorModal } from './ConnectErrorModal';
 import { ConnectLoadingModal } from './ConnectLoadingModal';
 import { ConnectPermissionsModal } from './ConnectPermissionsModal';
 import { CriticalCoinjoinPhaseModal } from './CriticalCoinjoinPhaseModal/CriticalCoinjoinPhaseModal';
+import { DeleteContactModal } from './DeleteContactModal';
 import { DeviceAuthenticityOptOutModal } from './DeviceAuthenticityOptOutModal';
 import { DisableTorModal } from './DisableTorModal';
 import { DisableTorStopCoinjoinModal } from './DisableTorStopCoinjoinModal';
@@ -196,6 +198,10 @@ export const UserContextModal = ({ payload }: ReduxModalProps<typeof MODAL_CONTE
             );
         case 'wipe-device-success':
             return <WipeDeviceSuccessModal />;
+        case 'add-contact':
+            return <AddContactModal {...payload} onCancel={onCancel} />;
+        case 'delete-contact':
+            return <DeleteContactModal {...payload} onCancel={onCancel} />;
         default:
             return exhaustive(payload);
     }

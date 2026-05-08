@@ -46,6 +46,14 @@ export const PageName = () => {
         );
     }
 
+    if (currentRoute === 'suite-accounts') {
+        return (
+            <BasicName>
+                <Translation id="TR_WALLET" />
+            </BasicName>
+        );
+    }
+
     if (selectedAccount && isAccountTabPage) {
         return <AccountName key={selectedAccount.key} selectedAccount={selectedAccount} />;
     }

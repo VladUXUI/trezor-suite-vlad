@@ -221,5 +221,9 @@ export const factory = <R extends StrictIpcRenderer<any, IpcRendererEvent>>(
 
         // Browser Window
         reloadBrowserWindow: () => ipcRenderer.invoke('browser-window/reload'),
+
+        // Address Book
+        getAddressBookEntries: () => ipcRenderer.invoke('address-book/get-entries'),
+        setAddressBookEntries: entries => ipcRenderer.invoke('address-book/set-entries', entries),
     };
 };

@@ -129,6 +129,16 @@ export type BioAuthSettings = {
     enabled: boolean;
 };
 
+export type AddressBookEntry = {
+    id: string;
+    label: string;
+    address: string;
+    coin: string;
+    note?: string;
+    createdAt: number;
+    updatedAt: number;
+};
+
 export type InvokeResult<Payload = undefined> =
     ExtractUndefined<Payload> extends undefined
         ? { success: true; payload?: Payload } | { success: false; error: string; code?: string }

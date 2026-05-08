@@ -2,6 +2,7 @@ import { type DecryptionError, type EncryptionError } from '@suite-common/platfo
 import { type Result } from '@trezor/type-utils';
 
 import {
+    type AddressBookEntry,
     type BioAuthSettings,
     type BootstrapTorEvent,
     type BridgeSettings,
@@ -169,6 +170,10 @@ export interface InvokeChannels {
 
     // Browser Window
     'browser-window/reload': () => void;
+
+    // Address Book
+    'address-book/get-entries': () => AddressBookEntry[];
+    'address-book/set-entries': (entries: AddressBookEntry[]) => void;
 }
 
 type DesktopApiListener = ListenerMethod<RendererChannels>;
@@ -256,4 +261,8 @@ export type DesktopApi = {
 
     // Browser Window
     reloadBrowserWindow: DesktopApiInvoke<'browser-window/reload'>;
+
+    // Address Book
+    getAddressBookEntries: DesktopApiInvoke<'address-book/get-entries'>;
+    setAddressBookEntries: DesktopApiInvoke<'address-book/set-entries'>;
 };

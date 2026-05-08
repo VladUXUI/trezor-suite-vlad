@@ -233,4 +233,19 @@ export type UserContextPayload =
       }
     | {
           type: 'wipe-device-success';
+      }
+    | {
+          type: 'add-contact';
+          prefill?: {
+              id?: string;
+              address?: string;
+              coin?: string;
+              label?: string;
+              note?: string;
+          };
+      }
+    | {
+          type: 'delete-contact';
+          id: string;
+          label: string;
       };

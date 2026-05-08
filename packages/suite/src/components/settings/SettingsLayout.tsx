@@ -62,6 +62,14 @@ const SettingsHeader = () => {
                     dispatch(goto({ routeName: 'settings-connected-apps', preserveParams: true })),
             },
             {
+                id: 'settings-address-book',
+                title: <Translation id="TR_ADDRESS_BOOK" />,
+                position: 'primary',
+                'data-testid': '@settings/menu/address-book',
+                callback: () =>
+                    dispatch(goto({ routeName: 'settings-address-book', preserveParams: true })),
+            },
+            {
                 id: 'settings-debug',
                 title: <Translation id="TR_DEBUG_SETTINGS" />,
                 position: 'primary',

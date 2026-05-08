@@ -2730,5 +2730,21 @@
   "TR_YOU_WERE_DISCONNECTED_DOT": "You're offline. Some features will be available when you reconnect.",
   "TR_ZERO_PHISHING_BANNER": "Proceed with caution. This may be a fraudulent transaction. <a>Learn more</a>",
   "TR_ZERO_PHISHING_TOOLTIP": "Address poisoning alert. This transaction looks suspicious. <a>Learn more</a>",
-  "ZERO_BALANCE_TOKENS": "Zero-balance tokens"
+  "ZERO_BALANCE_TOKENS": "Zero-balance tokens",
+  "TR_ADDRESS_BOOK": "Address Book",
+  "TR_ADD_CONTACT": "Add contact",
+  "TR_EDIT_CONTACT": "Edit contact",
+  "TR_DELETE_CONTACT": "Delete contact",
+  "TR_ADDRESS_BOOK_DESCRIPTION": "Save frequently used addresses for quick access when sending funds.",
+  "TR_ADDRESS_BOOK_EMPTY_TITLE": "No saved contacts yet",
+  "TR_ADDRESS_BOOK_EMPTY_DESCRIPTION": "Save addresses with labels to quickly select them when sending.",
+  "TR_ADDRESS_BOOK_SEARCH_PLACEHOLDER": "Search by name or address",
+  "TR_CONTACT_LABEL": "Label",
+  "TR_CONTACT_ADDRESS": "Address",
+  "TR_CONTACT_NETWORK": "Network",
+  "TR_CONTACT_NOTE": "Note (optional)",
+  "TR_ADDRESS_BOOK_DUPLICATE_WARNING": "This address is already saved as \"{label}\". Save anyway?",
+  "TR_SAVE_TO_ADDRESS_BOOK": "Save to address book",
+  "TR_DELETE_CONTACT_CONFIRM": "Are you sure you want to delete \"{label}\"?",
+  "TR_ADDRESS_BOOK_LABEL_HINT": "Label: {label}"
 }

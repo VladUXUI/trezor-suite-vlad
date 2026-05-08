@@ -30,7 +30,7 @@ export const StoreBadge = ({ url, image, isHighlighted, onClick }: StoreBadgePro
                 padding={{ vertical: 8, horizontal: 12 }}
                 cursor="pointer"
                 borderRadius={8}
-                backgroundColor="elementFillNeutralSoft"
+                backgroundColor="contentInfoPressed"
                 onMouseLeave={onMouseLeave}
             >
                 <Row alignItems="center">

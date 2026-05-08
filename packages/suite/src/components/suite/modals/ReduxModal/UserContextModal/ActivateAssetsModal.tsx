@@ -93,7 +93,7 @@ export const ActivateAssetsModal = ({ onCancel }: ActivateAssetsModalProps) => {
             dispatch(changeCoinVisibility({ symbol, shouldBeVisible: false })),
         );
 
-        if (toEnable.length > 0) {
+        if (toEnable.length > 0 || toDisable.length > 0) {
             dispatch(startOrRestartDiscoveryThunk());
         }
 

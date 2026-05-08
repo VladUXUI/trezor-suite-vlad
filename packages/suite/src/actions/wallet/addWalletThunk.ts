@@ -22,9 +22,9 @@ export const redirectAfterWalletSelectedThunk = createThunk<
 
             return;
         }
-        // Preserve route for dashboard or wallet context only. Redirect from other routes to dashboard index.
+        // Preserve route for dashboard, wallet, or accounts context only. Redirect from other routes to dashboard index.
         const isWalletOrDashboardContext =
-            backgroundRoute && ['wallet', 'dashboard'].includes(backgroundRoute.app);
+            backgroundRoute && ['wallet', 'dashboard', 'accounts'].includes(backgroundRoute.app);
         if (!isWalletOrDashboardContext) {
             await dispatch(goto({ routeName: 'suite-index' }));
         }

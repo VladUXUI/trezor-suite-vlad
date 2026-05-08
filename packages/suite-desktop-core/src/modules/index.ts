@@ -4,6 +4,7 @@ import { isDevEnv } from '@suite-common/suite-utils';
 import type { HandshakeClient } from '@trezor/suite-desktop-api';
 import { isNotUndefined } from '@trezor/utils';
 
+import * as addressBook from './addressBook';
 import * as autoStart from './auto-start';
 import * as autoUpdater from './auto-updater';
 import * as bluetooth from './bluetooth';
@@ -79,6 +80,7 @@ const MODULES: Module[] = [
     firmware,
     powerMonitor,
     mcpServer,
+    addressBook,
     // Modules used only in dev/prod mode
     ...(isDevEnv ? [] : [csp]),
 ];

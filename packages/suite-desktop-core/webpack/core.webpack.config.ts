@@ -154,7 +154,7 @@ const config: webpack.Configuration = {
     },
     optimization: {
         splitChunks: {
-            chunks: 'all',
+            chunks: chunk => chunk.name !== 'preload',
             name(_: any, chunks: any) {
                 if (chunks.every((item: any) => item.name)) {
                     return chunks.length > 1

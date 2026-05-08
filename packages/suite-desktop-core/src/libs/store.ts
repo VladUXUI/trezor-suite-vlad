@@ -1,6 +1,6 @@
 import ElectronStore from 'electron-store';
 
-import { type SuiteThemeVariant } from '@trezor/suite-desktop-api';
+import { type AddressBookEntry, type SuiteThemeVariant } from '@trezor/suite-desktop-api';
 
 import { getInitialWindowSize } from './screen';
 
@@ -24,6 +24,7 @@ export class Store {
         connectSettings: ConnectSettings;
         bioAuthSettings: BioAuthSettings;
         mcpSettings: McpSettings;
+        addressBook: AddressBookEntry[];
     }>;
 
     private constructor() {
@@ -153,6 +154,14 @@ export class Store {
             ...this.getMcpSettings(),
             ...mcpSettings,
         });
+    }
+
+    public getAddressBook() {
+        return this.store.get('addressBook', []);
+    }
+
+    public setAddressBook(entries: AddressBookEntry[]) {
+        this.store.set('addressBook', entries);
     }
 
     /** Deletes all items from the store. */

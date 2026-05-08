@@ -20,6 +20,7 @@ import { isDesktop } from '@trezor/env-utils';
 import { desktopApi } from '@trezor/suite-desktop-api';
 
 import { bluetoothOnDeviceConnectedThunk } from 'src/actions/bluetooth/bluetoothOnDeviceConnectedThunk';
+import * as addressBookThunks from 'src/actions/suite/addressBookThunks';
 import * as bioAuthThunks from 'src/actions/suite/bioAuthThunks';
 import { markDeviceAsRecentlyConnectedThunk } from 'src/actions/wallet/markDeviceAsRecentlyConnectedThunk';
 import type { Dispatch, GetState } from 'src/types/suite';
@@ -145,6 +146,10 @@ export const init = () => async (dispatch: Dispatch, getState: GetState) => {
     if (isDesktop()) {
         dispatch(bioAuthThunks.init());
     }
-    // 16. backend connected, suite is ready to use
+    // 16. address book
+    if (isDesktop()) {
+        dispatch(addressBookThunks.initAddressBookThunk());
+    }
+    // 17. backend connected, suite is ready to use
     dispatch(onSuiteReady());
 };

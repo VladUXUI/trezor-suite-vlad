@@ -17,6 +17,7 @@ import { prepareWalletConnectReducer } from '@suite-common/walletconnect';
 import { deviceSlice } from 'src/actions/device/deviceSlice';
 import { extraDependencies } from 'src/support/extraDependencies';
 
+import { addressBookSlice } from './addressBookReducer';
 import guide from './guideReducer';
 import protocol from './protocolReducer';
 import suite from './suiteReducer';
@@ -30,6 +31,7 @@ const flags = prepareFlagsReducer(extraDependencies);
 const suiteSettings = prepareSuiteSettingsReducer(extraDependencies);
 const connectPopupReducer = prepareConnectPopupReducer(extraDependencies);
 const walletConnectReducer = prepareWalletConnectReducer(extraDependencies);
+const addressBook = addressBookSlice.prepareReducer(extraDependencies);
 
 export default {
     suite,
@@ -51,4 +53,5 @@ export default {
     featureFeedback: featureFeedbackReducer,
     connectPopup: connectPopupReducer,
     walletConnect: walletConnectReducer,
+    addressBook,
 };

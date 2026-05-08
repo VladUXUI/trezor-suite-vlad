@@ -1,16 +1,18 @@
 import { type ReactNode } from 'react';
 
+import { Translation } from '@suite/intl';
+import { openModal } from '@suite/modal';
 import { type NetworkSymbolExtended, isNetworkSymbol } from '@suite-common/wallet-config';
 import { getExplorerUrl } from '@suite-common/wallet-config/src/getExplorerUrls';
 import { selectExplorer } from '@suite-common/wallet-core';
 import { formatNetworkAmount } from '@suite-common/wallet-utils';
 import { type AnonymitySet } from '@trezor/blockchain-link-types';
-import { Column, Link, Row, Text } from '@trezor/components';
+import { Column, IconButton, Link, Row, Text } from '@trezor/components';
 
 import { Address } from 'src/components/suite/Address';
 import { FormattedCryptoAmount } from 'src/components/suite/FormattedCryptoAmount';
 import { UtxoAnonymity } from 'src/components/wallet';
-import { useExternalLink } from 'src/hooks/suite';
+import { useDispatch, useExternalLink } from 'src/hooks/suite';
 import { useSelector } from 'src/hooks/suite/useSelector';
 import { selectFullSelectedAccount } from 'src/reducers/wallet/selectedAccountReducer';
 
@@ -33,6 +35,7 @@ export const IOItem = ({
     amount,
     isPhishingTransaction,
 }: IOItem) => {
+    const dispatch = useDispatch();
     const { network } = useSelector(selectFullSelectedAccount);
     const explorer = useSelector(state => selectExplorer(state, network?.symbol));
     const explorerUrl = getExplorerUrl(explorer, 'address');
@@ -46,14 +49,36 @@ export const IOItem = ({
                 {!isOpReturn ? (
                     <>
                         {value && (
-                            <Link href={explorerLink}>
-                                <Address
-                                    value={value}
-                                    isTruncated
-                                    data-testid="@tx-detail/txid-value"
-                                    isCopyAllowed={!isPhishingTransaction}
-                                />
-                            </Link>
+                            <Row gap={4} alignItems="center">
+                                <Link href={explorerLink}>
+                                    <Address
+                                        value={value}
+                                        isTruncated
+                                        data-testid="@tx-detail/txid-value"
+                                        isCopyAllowed={!isPhishingTransaction}
+                                    />
+                                </Link>
+                                {network?.symbol && !isPhishingTransaction && (
+                                    <IconButton
+                                        icon="bookOpenText"
+                                        size="small"
+                                        variant="tertiary"
+                                        onClick={() =>
+                                            dispatch(
+                                                openModal({
+                                                    type: 'add-contact',
+                                                    prefill: {
+                                                        address: value,
+                                                        coin: network.symbol,
+                                                    },
+                                                }),
+                                            )
+                                        }
+                                        label={<Translation id="TR_SAVE_TO_ADDRESS_BOOK" />}
+                                        data-testid="@tx-detail/save-to-address-book"
+                                    />
+                                )}
+                            </Row>
                         )}
                         <Row gap={8}>
                             {anonymity && <UtxoAnonymity anonymity={anonymity} />}

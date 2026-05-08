@@ -36,6 +36,11 @@ export const routes = [
         app: 'earn',
     },
     {
+        name: 'suite-accounts',
+        pattern: '/all-accounts',
+        app: 'accounts',
+    },
+    {
         name: 'earn-supply',
         pattern: '/earn/supply',
         app: 'earn',
@@ -137,6 +142,11 @@ export const routes = [
     {
         name: 'settings-connected-apps',
         pattern: '/settings/connected-apps',
+        app: 'settings',
+    },
+    {
+        name: 'settings-address-book',
+        pattern: '/settings/address-book',
         app: 'settings',
     },
     {
