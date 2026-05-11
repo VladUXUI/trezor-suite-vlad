@@ -37,6 +37,12 @@ type TokenRowProps = {
     isUnverifiedTable?: boolean;
     isCollapsed?: boolean;
     yieldOpportunities?: YieldDto[];
+    /**
+     * When true, render a small network badge over the token icon. Used in
+     * the chain-agnostic address view where the same Tokens page mixes tokens
+     * from multiple chains and the badge is essential to disambiguate.
+     */
+    showNetworkIcon?: boolean;
 };
 
 export const TokenRow = ({
@@ -49,6 +55,7 @@ export const TokenRow = ({
     isUnverifiedTable,
     isCollapsed,
     yieldOpportunities,
+    showNetworkIcon,
 }: TokenRowProps) => {
     const device = useSelector(selectSelectedDevice);
     const isTokenKnown = useSelector(state =>
@@ -72,6 +79,7 @@ export const TokenRow = ({
                             contractAddress={token.contract}
                             size={24}
                             shouldTryToFetch={isTokenKnown}
+                            showNetworkIcon={showNetworkIcon}
                         />
                         {isTokenKnown ? token.name : <BlurUrls text={token.name} />}
                     </Row>

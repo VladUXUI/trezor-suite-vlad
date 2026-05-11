@@ -15,6 +15,7 @@ import { useSuiteServices } from 'src/support/SuiteServicesProvider';
 import { GlobalSendReceive } from './GlobalSendReceive/GlobalSendReceive';
 import { HeaderActions } from './HeaderActions';
 import { HeaderDropdown } from './HeaderDropdown';
+import { RenameAccountProvider } from './PageNames/AccountName/RenameAccountContext';
 import { PageName } from './PageNames/PageName';
 import { TradeActions } from './TradeActions';
 
@@ -67,15 +68,21 @@ export const PageHeader = ({ children }: PageHeaderProps) => {
     const isTradeSection = !!effectiveRouteName?.includes('wallet-trading');
 
     if (isTradeSection || children != null) {
-        return <Container>{children}</Container>;
+        return (
+            <RenameAccountProvider>
+                <Container>{children}</Container>
+            </RenameAccountProvider>
+        );
     }
 
     return (
-        <Container>
-            <PageName />
+        <RenameAccountProvider>
+            <Container>
+                <PageName />
 
-            {effectiveRouteName === 'suite-index' && <PageHeaderIndex />}
-            {!!selectedAccountKey && isAccountTabPage && <HeaderActions />}
-        </Container>
+                {effectiveRouteName === 'suite-index' && <PageHeaderIndex />}
+                {!!selectedAccountKey && isAccountTabPage && <HeaderActions />}
+            </Container>
+        </RenameAccountProvider>
     );
 };

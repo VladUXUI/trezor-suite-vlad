@@ -5,6 +5,8 @@ export * from './accounts/accountsMiddleware';
 export * from './accounts/accountsReducer';
 export * from './accounts/accountsSelectors';
 export * from './accounts/accountsThunks';
+export * from './accounts/groupAccountsByAddress';
+export * from './accounts/addressSelectors';
 export * from './allowance/composeAllowanceTransactionThunk';
 export * from './allowance/fetchAllowance';
 export { useSelector as useAccountsSelector } from './accounts/hooks/useSelector';

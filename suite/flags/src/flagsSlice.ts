@@ -10,6 +10,7 @@ export interface FlagsState {
     securityStepsHidden: boolean;
     dashboardGraphHidden: boolean;
     dashboardAssetsGridMode: boolean;
+    accountsGridMode: boolean;
     showTEXDashboardPromoBanner: boolean;
     showTS7DashboardPromoBanner: boolean;
     showStablecoinYieldDashboardPromoBanner: boolean;
@@ -39,6 +40,7 @@ export const flagsInitialState: FlagsState = {
     securityStepsHidden: false,
     dashboardGraphHidden: false,
     dashboardAssetsGridMode: true,
+    accountsGridMode: true,
     showTEXDashboardPromoBanner: true,
     showTS7DashboardPromoBanner: true,
     showStablecoinYieldDashboardPromoBanner: true,

@@ -1,5 +1,5 @@
 import { type AccountWithSuiteSyncLabel } from '@suite-common/suite-sync';
-import { type AccountKey } from '@suite-common/wallet-types';
+import { type Account, type AccountKey } from '@suite-common/wallet-types';
 
 import { type TokensWithRates } from 'src/utils/wallet/tokenUtils';
 
@@ -56,10 +56,14 @@ export function createNonTradableTokensOption({
     } satisfies Extract<AccountWithTokensOption, { type: 'non-tradable-tokens' }>;
 }
 
-export const createAccountOption = (account: AccountWithSuiteSyncLabel) =>
+export const createAccountOption = (
+    account: AccountWithSuiteSyncLabel,
+    siblingAccounts?: Account[],
+) =>
     ({
         type: 'account',
         account,
+        siblingAccounts,
         height: ASSET_ROW_HEIGHT,
     }) satisfies Extract<AccountWithTokensOption, { type: 'account' }>;
 

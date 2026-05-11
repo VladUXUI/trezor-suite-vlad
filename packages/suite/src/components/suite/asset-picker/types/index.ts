@@ -1,4 +1,5 @@
 import { type AccountWithSuiteSyncLabel } from '@suite-common/suite-sync';
+import { type Account } from '@suite-common/wallet-types';
 
 import { type TokensWithRates } from 'src/utils/wallet/tokenUtils';
 
@@ -8,6 +9,8 @@ export type AccountWithTokensOption =
     | {
           type: 'account';
           account: AccountWithSuiteSyncLabel;
+          /** All sibling EVM sub-accounts sharing the same address. Present only for grouped EVM rows; undefined for single-chain accounts. */
+          siblingAccounts?: Account[];
           height: number;
       }
     | {

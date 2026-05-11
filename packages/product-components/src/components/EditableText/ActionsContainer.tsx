@@ -19,6 +19,7 @@ type ActionContainerProps = {
     isHovered: boolean;
     isDeleteButtonVisible: boolean;
     isSubmitButtonVisible: boolean;
+    isEditActionHidden?: boolean;
     savingStatus: SavingStatus;
 };
 
@@ -55,6 +56,7 @@ export const ActionsContainer = ({
     isHovered,
     isDeleteButtonVisible,
     isSubmitButtonVisible,
+    isEditActionHidden,
     savingStatus,
 }: ActionContainerProps) => {
     const isActive = Boolean(isEditable || isHovered);
@@ -127,20 +129,25 @@ export const ActionsContainer = ({
         } else {
             return (
                 <>
-                    <Tooltip
-                        content={
-                            <FormattedMessage id="TR_LABELING_EDIT_LABEL" defaultMessage="Edit" />
-                        }
-                        delayShow={1000}
-                    >
-                        <IconButton
-                            data-testid="@metadata/edit"
-                            intent="neutral"
-                            icon="pencilSimple"
-                            onClick={onEdit}
-                            {...commonProps}
-                        />
-                    </Tooltip>
+                    {!isEditActionHidden && (
+                        <Tooltip
+                            content={
+                                <FormattedMessage
+                                    id="TR_LABELING_EDIT_LABEL"
+                                    defaultMessage="Edit"
+                                />
+                            }
+                            delayShow={1000}
+                        >
+                            <IconButton
+                                data-testid="@metadata/edit"
+                                intent="neutral"
+                                icon="pencilSimple"
+                                onClick={onEdit}
+                                {...commonProps}
+                            />
+                        </Tooltip>
+                    )}
                     {isDeleteButtonVisible && (
                         <Tooltip
                             content={

@@ -11826,4 +11826,36 @@ export const messages = defineMessages({
         id: 'TR_ADDRESS_BOOK_LABEL_HINT',
         defaultMessage: 'Label: {label}',
     },
+    TR_ACCOUNT_ROW_TOKEN_COUNT: {
+        id: 'TR_ACCOUNT_ROW_TOKEN_COUNT',
+        defaultMessage: '{count, plural, one {# token} other {# tokens}}',
+    },
+    TR_ACCOUNT_ROW_NO_TOKENS: {
+        id: 'TR_ACCOUNT_ROW_NO_TOKENS',
+        defaultMessage: 'No tokens',
+    },
+    TR_OTHER_ACCOUNTS: {
+        id: 'TR_OTHER_ACCOUNTS',
+        defaultMessage: 'Other accounts',
+    },
+    TR_ADD_ACCOUNT_BUTTON: {
+        id: 'TR_ADD_ACCOUNT_BUTTON',
+        defaultMessage: 'Add account',
+    },
+    TR_ADDRESS_BALANCE_ACROSS_CHAINS: {
+        id: 'TR_ADDRESS_BALANCE_ACROSS_CHAINS',
+        defaultMessage: 'across {count, plural, one {# chain} other {# chains}}',
+    },
+    TR_CHAIN_PICKER_SEND_TITLE: {
+        id: 'TR_CHAIN_PICKER_SEND_TITLE',
+        defaultMessage: 'Send from',
+    },
+    TR_ADDRESS_TRANSACTIONS_ON_CHAIN: {
+        id: 'TR_ADDRESS_TRANSACTIONS_ON_CHAIN',
+        defaultMessage: 'Transactions on {chainName}',
+    },
+    TR_RENAME_ACCOUNT: {
+        id: 'TR_RENAME_ACCOUNT',
+        defaultMessage: 'Rename account',
+    },
 } as const);

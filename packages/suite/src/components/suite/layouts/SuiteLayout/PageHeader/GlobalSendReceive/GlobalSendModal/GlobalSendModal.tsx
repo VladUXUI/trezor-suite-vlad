@@ -92,6 +92,7 @@ export function GlobalSendModal({ onCancel, onSubmit }: GlobalSendModalProps) {
                         <AssetRowAccountWithBalance
                             dataTestId={`@asset-picker/send/option/${item.account.accountType}/${item.account.symbol}/${item.account.index}`}
                             account={item.account}
+                            siblingAccounts={item.siblingAccounts}
                             onClick={handleAccountClick}
                         />
                     );

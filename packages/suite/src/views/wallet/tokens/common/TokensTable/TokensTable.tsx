@@ -41,6 +41,11 @@ interface TokensTableProps {
     searchQuery?: string;
     isUnverifiedTable?: boolean;
     yieldOpportunities?: YieldDto[];
+    /**
+     * Forwarded to each row's `AssetLogo`. Set when the surrounding view
+     * mixes tokens from multiple chains (the chain-agnostic address page).
+     */
+    showNetworkIcon?: boolean;
 }
 
 export const TokensTable = ({
@@ -54,6 +59,7 @@ export const TokensTable = ({
     searchQuery,
     isUnverifiedTable,
     yieldOpportunities,
+    showNetworkIcon,
 }: TokensTableProps) => {
     const dispatch = useDispatch();
     const [isZeroBalanceOpen, setIsZeroBalanceOpen] = useState(false);
@@ -109,6 +115,7 @@ export const TokensTable = ({
                                 isUnverifiedTable={isUnverifiedTable}
                                 hideRates={hideRates}
                                 yieldOpportunities={yieldOpportunities}
+                                showNetworkIcon={showNetworkIcon}
                             />
                         ))}
                         {tokensWithoutBalance.length !== 0 && (
@@ -137,6 +144,7 @@ export const TokensTable = ({
                                         hideRates={hideRates}
                                         isCollapsed={!isZeroBalanceOpen}
                                         yieldOpportunities={yieldOpportunities}
+                                        showNetworkIcon={showNetworkIcon}
                                     />
                                 ))}
                             </>

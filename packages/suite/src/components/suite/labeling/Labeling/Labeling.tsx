@@ -1,4 +1,4 @@
-import { type ReactNode, useCallback, useRef, useState } from 'react';
+import { type ReactNode, forwardRef, useCallback, useRef, useState } from 'react';
 
 import { isFulfilled } from '@reduxjs/toolkit';
 
@@ -10,7 +10,11 @@ import {
 import { type MetadataAddPayload } from '@suite-common/metadata-types';
 import { selectIsSuiteSyncEnabled } from '@suite-common/suite-sync';
 import { type StaticSessionId } from '@trezor/connect';
-import { EditableText, type EditableTextProps } from '@trezor/product-components';
+import {
+    EditableText,
+    type EditableTextProps,
+    type EditableTextRef,
+} from '@trezor/product-components';
 
 import { selectDesktopSuiteSyncInteraction } from 'src/actions/suiteSync/suiteSyncSlice';
 import { processLegacyMetadataIntoSuiteSyncThunk } from 'src/actions/wallet/processLegacyMetadataIntoSuiteSyncThunk';
@@ -28,16 +32,13 @@ type LabelingProps = {
     children?: ReactNode;
     isDisabled?: boolean;
     onSubmit?: (value: string) => Promise<boolean>;
+    onAfterSubmit?: (success: boolean) => void;
 } & Partial<EditableTextProps>;
 
-export const Labeling = ({
-    payload,
-    deviceStaticSessionId,
-    children,
-    isDisabled,
-    onSubmit,
-    ...rest
-}: LabelingProps) => {
+export const Labeling = forwardRef<EditableTextRef, LabelingProps>(function Labeling(
+    { payload, deviceStaticSessionId, children, isDisabled, onSubmit, onAfterSubmit, ...rest },
+    ref,
+) {
     const dispatch = useDispatch();
     const [showEnableSuiteSyncModal, setShowEnableSuiteSyncModal] = useState(false);
     const suiteSyncTurnOnEditResolveRef = useRef<((value: boolean) => void) | null>(null);
@@ -130,7 +131,12 @@ export const Labeling = ({
 
     const handleSubmit = useCallback(
         async (value: string | undefined) => {
-            if (isSuiteSyncEnabled) {
+            const submit = onSubmit;
+            let success: boolean;
+
+            if (submit) {
+                success = await submit(value ?? '');
+            } else if (isSuiteSyncEnabled) {
                 const result = await dispatch(
                     processLegacyMetadataIntoSuiteSyncThunk({
                         payload,
@@ -145,18 +151,21 @@ export const Labeling = ({
                         dispatch,
                         deviceStaticSessionId,
                     });
-
-                    return false;
+                    success = false;
+                } else {
+                    success = true;
                 }
-
-                return true;
             } else {
-                return await dispatch(
+                success = await dispatch(
                     metadataLabelingActions.addMetadata({ ...payload, value: value || undefined }),
                 );
             }
+
+            onAfterSubmit?.(success);
+
+            return success;
         },
-        [isSuiteSyncEnabled, dispatch, payload, deviceStaticSessionId],
+        [onSubmit, onAfterSubmit, isSuiteSyncEnabled, dispatch, payload, deviceStaticSessionId],
     );
 
     return (
@@ -172,7 +181,8 @@ export const Labeling = ({
                 suiteSyncInteraction={isSuiteSyncEnabled ? suiteSyncInteraction : null}
             >
                 <EditableText
-                    onSubmit={onSubmit ?? handleSubmit}
+                    ref={ref}
+                    onSubmit={handleSubmit}
                     onEdit={handleEdit}
                     isDisabled={isDisabled || !isLabelActionEnabled}
                     isLoading={legacyMetadataState.initiating || isDiscoveryRunning}
@@ -184,4 +194,4 @@ export const Labeling = ({
             </SuiteSyncInteractionsTooltip>
         </>
     );
-};
+});

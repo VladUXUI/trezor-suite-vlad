@@ -1,4 +1,12 @@
-import React, { type ReactNode, useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+    type ReactNode,
+    forwardRef,
+    useCallback,
+    useEffect,
+    useImperativeHandle,
+    useRef,
+    useState,
+} from 'react';
 
 import styled, { css } from 'styled-components';
 
@@ -39,6 +47,7 @@ export type EditableTextProps = AllowedFrameProps & {
     isLoading?: boolean;
     isDisabled?: boolean;
     isAlwaysActive?: boolean;
+    isEditActionHidden?: boolean;
     placeholder?: string;
     leftAddon?: ReactNode;
     rightAddon?: ReactNode;
@@ -162,23 +171,32 @@ const Container = styled.span<ContainerProps>`
     ${withFrameProps};
 `;
 
-export const EditableText = ({
-    children,
-    defaultValue,
-    displayValue,
-    onSubmit,
-    onEdit,
-    onCancel,
-    isLoading = false,
-    isDisabled = false,
-    isAlwaysActive = false,
-    placeholder,
-    leftAddon,
-    rightAddon,
-    gap = 8,
-    'data-testid': dataTestId,
-    ...rest
-}: EditableTextProps) => {
+export type EditableTextRef = {
+    startEditing: () => Promise<void>;
+    cancelEditing: () => void;
+};
+
+export const EditableText = forwardRef<EditableTextRef, EditableTextProps>(function EditableText(
+    {
+        children,
+        defaultValue,
+        displayValue,
+        onSubmit,
+        onEdit,
+        onCancel,
+        isLoading = false,
+        isDisabled = false,
+        isAlwaysActive = false,
+        isEditActionHidden = false,
+        placeholder,
+        leftAddon,
+        rightAddon,
+        gap = 8,
+        'data-testid': dataTestId,
+        ...rest
+    },
+    ref,
+) {
     const [isEditable, setIsEditable] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
     const [savingStatus, setSavingStatus] = useState<SavingStatus>('idle');
@@ -271,6 +289,15 @@ export const EditableText = ({
         setIsEditable(true);
         focus();
     }, [onEdit]);
+
+    useImperativeHandle(
+        ref,
+        () => ({
+            startEditing: handleEdit,
+            cancelEditing: handleCancel,
+        }),
+        [handleEdit, handleCancel],
+    );
 
     const handleDelete = useCallback(async () => {
         setSavingStatus('saving');
@@ -481,7 +508,8 @@ export const EditableText = ({
                 isHovered={isHovered || isAlwaysActive}
                 isSubmitButtonVisible={isDirty}
                 isDeleteButtonVisible={hasCustomValue}
+                isEditActionHidden={isEditActionHidden}
             />
         </Container>
     );
-};
+});

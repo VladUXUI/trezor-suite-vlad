@@ -8,11 +8,13 @@ import {
 import { CoinjoinAccountDiscoveryProgress, WalletLayout } from 'src/components/wallet';
 import { SolanaLimitedHistoryBanner } from 'src/components/wallet/WalletLayout/AccountBanners/SolanaLimitedHistoryBanner';
 import { useSelector } from 'src/hooks/suite';
+import { useSelectedAddressView } from 'src/hooks/wallet/useSelectedAddressView';
 import { type AppState } from 'src/types/suite';
 
 import { CoinjoinExplanation } from './CoinjoinExplanation/CoinjoinExplanation';
 import { CoinjoinSummary } from './CoinjoinSummary/CoinjoinSummary';
 import { TradeBox } from './TradeBox/TradeBox';
+import { AggregatedTransactionList } from './TransactionList/AggregatedTransactionList';
 import { WalletTransactionList } from './TransactionList/WalletTransactionList';
 import { AccountEmpty } from './components/AccountEmpty';
 import { NoTransactions } from './components/NoTransactions';
@@ -39,12 +41,31 @@ export const Transactions = () => {
     const accountTransactions = useSelector(state =>
         selectAccountTransactionsWithNulls(state, selectedAccount.account?.key || null),
     );
+    const addressView = useSelectedAddressView();
 
     if (selectedAccount.status !== 'loaded') {
         return <Layout selectedAccount={selectedAccount} />;
     }
 
     const { account } = selectedAccount;
+
+    // Aggregate (multi-chain EVM): show the per-primary-chain summary card on
+    // top (`TransactionSummary` is single-chain today; aggregating it across
+    // chains is a future-pass), then a single chronological merged feed for
+    // every transaction across every sibling chain.
+    if (addressView?.kind === 'aggregate') {
+        return (
+            <Layout selectedAccount={selectedAccount}>
+                <TransactionSummary account={addressView.primary} />
+                <TradeBox account={addressView.primary} />
+                <AggregatedTransactionList
+                    accounts={addressView.accounts}
+                    descriptor={addressView.descriptor}
+                    deviceState={addressView.primary.deviceState}
+                />
+            </Layout>
+        );
+    }
 
     if (account.backendType === 'coinjoin') {
         const isLoading = account.status === 'out-of-sync' && !!account.syncing;

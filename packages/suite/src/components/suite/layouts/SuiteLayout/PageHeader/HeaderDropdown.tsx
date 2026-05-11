@@ -13,6 +13,7 @@ import { selectSelectedAccount } from 'src/reducers/wallet/selectedAccountReduce
 import { useConditionalRender } from 'src/support/suite/ConditionalRender';
 import { useAnalytics } from 'src/support/useAnalytics';
 
+import { useRenameAccount } from './PageNames/AccountName/RenameAccountContext';
 import { useGoToWithAnalytics } from './useGoToWithAnalytics';
 
 type ActionItem = {
@@ -48,7 +49,21 @@ export const HeaderDropdown = ({
         minWidth: breakpoints.tablet,
     });
 
+    const renameContext = useRenameAccount();
+
     const additionalActions: ActionItem[] = [
+        ...(account
+            ? [
+                  {
+                      id: 'wallet-rename-account',
+                      callback: () => {
+                          renameContext?.requestRename();
+                      },
+                      title: <Translation id="TR_RENAME_ACCOUNT" />,
+                      icon: 'pencilSimple' as const,
+                  },
+              ]
+            : []),
         ...(showSignAndVerify
             ? [
                   {

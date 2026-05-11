@@ -18,7 +18,11 @@ export * from './components/TokenIconSet/TokenIconSet';
 export { TokenTabs, type TokenTab } from './components/SelectAssetModal/TokenTabs';
 export { NumberInput } from './components/NumberInput/NumberInput';
 export { InputWithOptions } from './components/InputWithOptions/InputWithOptions';
-export { EditableText, type EditableTextProps } from './components/EditableText/EditableText';
+export {
+    EditableText,
+    type EditableTextProps,
+    type EditableTextRef,
+} from './components/EditableText/EditableText';
 export * from './components/JsonlReader/JsonlReader';
 export { CardList, type CardListProps } from '@trezor/components';
 export { FeeRate } from './components/FeeRate/FeeRate';
@@ -40,6 +44,7 @@ export {
 } from './components/AssetLogo/AssetLogoWithId';
 export { shouldShowNetworkIcon } from './components/AssetLogo/assetLogoUtils';
 export { isNetworkSymbolWithIcon } from './constants/networks';
+export { NetworkIcon, type NetworkIconProps } from './components/NetworkIcon/NetworkIcon';
 export * from './components/TopAssets/TopAssets';
 export { ExchangeInfoNotification } from './components/Notifications/ExchangeInfoNotification';
 export { TransactionNotification } from './components/Notifications/TransactionNotification';
