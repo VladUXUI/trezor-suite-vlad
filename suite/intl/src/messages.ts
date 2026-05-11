@@ -33,6 +33,10 @@ export const messages = defineMessages({
         defaultMessage: 'No assets are active',
         id: 'TR_ACCOUNT_EXCEPTION_DISCOVERY_EMPTY',
     },
+    TR_SELECT_NETWORKS: {
+        defaultMessage: 'Select networks',
+        id: 'TR_SELECT_NETWORKS',
+    },
     TR_DASHBOARD_ACTIVATE_ASSETS_DESC: {
         defaultMessage:
             'Add the networks you want to use. You can buy or receive assets on any network you enable.',

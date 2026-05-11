@@ -15,7 +15,17 @@ import {
     selectBaseCurrency,
     selectCurrentFiatRates,
 } from '@suite-common/wallet-core';
-import { Button, Card, Collapsible, Column, IconButton, Row, Text } from '@trezor/components';
+import {
+    Button,
+    Card,
+    Collapsible,
+    Column,
+    H3,
+    IconButton,
+    Illustration,
+    Row,
+    Text,
+} from '@trezor/components';
 import { spacingsPx } from '@trezor/theme';
 
 import { DashboardSection } from 'src/components/dashboard';
@@ -69,7 +79,30 @@ export const AccountsView = () => {
     }, [accounts, baseCurrencyCode, currentFiatRates]);
 
     if (accounts.length === 0 && !isDiscoveryRunning) {
-        return null;
+        return (
+            <DashboardSection data-testid="@accounts-page/empty">
+                <Card>
+                    <Column gap={16} alignItems="center" padding={{ vertical: 40 }}>
+                        <Illustration name="networks" width={224} />
+                        <H3>
+                            <Translation id="TR_YOUR_WALLET_IS_READY_WHAT" />
+                        </H3>
+                        <Text intent="neutral" priority="secondary" typographyStyle="body-sm">
+                            <Translation id="TR_DASHBOARD_ACTIVATE_ASSETS_DESC" />
+                        </Text>
+                        <Button
+                            intent="brand"
+                            size="large"
+                            iconLeft="plus"
+                            onClick={() => dispatch(openModal({ type: 'activate-assets' }))}
+                            data-testid="@accounts-page/empty/select-networks"
+                        >
+                            <Translation id="TR_SELECT_NETWORKS" />
+                        </Button>
+                    </Column>
+                </Card>
+            </DashboardSection>
+        );
     }
 
     const isAddAccountDisabled = isDiscoveryRunning || !device || !device.connected;
