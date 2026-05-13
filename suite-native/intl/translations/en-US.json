@@ -1233,6 +1233,8 @@
     "modulePassphrase.enablePassphrase.cancelledError": "Passphrase enabling canceled.",
     "modulePassphrase.passphraseFeatureUnlock.title": "Enter passphrase to continue",
     "moduleSend.accountsList.title": "Send",
+    "moduleSend.accountsList.selectNetwork": "Select network",
+    "moduleSend.accountsList.selectAsset": "Select asset",
     "moduleSend.outputs.title": "{assetName} Send",
     "moduleSend.outputs.correctNetworkMessage": "Make sure that you’re sending to an address\non {networkName} network. <link>Learn more</link>",
     "moduleSend.outputs.tokenOfNetworkSheet.title": "You’re about to Send {tokenSymbol} that runs on {networkName} network.",

@@ -136,7 +136,12 @@ export type ReceiveStackParamList = {
 };
 
 export type SendStackParamList = {
-    [SendStackRoutes.SendAccounts]: undefined;
+    [SendStackRoutes.SendAccounts]:
+        | {
+              accountKey?: AccountKey;
+              tokenContract?: TokenAddress;
+          }
+        | undefined;
     [SendStackRoutes.SendOutputs]: {
         accountKey: AccountKey;
         tokenContract?: TokenAddress;

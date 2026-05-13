@@ -17,6 +17,7 @@ import {
     getSimpleCoinDefinitionsByNetwork,
     selectTokenDefinitions,
 } from '@suite-common/token-definitions';
+import { type NetworkSymbol } from '@suite-common/wallet-config';
 import {
     type AccountsRootState,
     type FiatRatesRootState,
@@ -90,6 +91,28 @@ export const selectFilteredDeviceAccountsGroupedByNetworkAccountType = createMem
             accountsSorted => filterAccountsByLabelAndNetworkNames(accountsSorted, filterValue),
             groupAccountsByNetworkAccountType,
         ) as GroupedByTypeAccounts;
+    },
+);
+
+export const selectSendAvailableNetworkSymbols = createMemoizedSelector(
+    [selectVisibleAccountsWithLabel],
+    accounts => {
+        const sendAvailable = filterSendAvailableAccounts(accounts);
+
+        return [...new Set(sendAvailable.map(a => a.symbol))] as NetworkSymbol[];
+    },
+);
+
+export const selectSendAvailableAccountsByNetworkSymbol = createMemoizedSelector(
+    [
+        selectVisibleAccountsWithLabel,
+        (_: NativeAccountsRootState, networkSymbol: NetworkSymbol | null) => networkSymbol,
+    ],
+    (accounts, networkSymbol) => {
+        const sendAvailable = filterSendAvailableAccounts(accounts);
+        if (!networkSymbol) return sendAvailable;
+
+        return sendAvailable.filter(a => a.symbol === networkSymbol);
     },
 );
 
@@ -213,6 +236,16 @@ export const getAccountListSections = (
 
     return sections;
 };
+
+export const selectSendAssetSectionsForNetwork = createMemoizedSelector(
+    [selectSendAvailableAccountsByNetworkSymbol, selectTokenDefinitions],
+    (accounts, tokenDefinitions) =>
+        accounts.flatMap(account => {
+            const networkDefs = getSimpleCoinDefinitionsByNetwork(tokenDefinitions, account.symbol);
+
+            return getAccountListSections(account, networkDefs);
+        }),
+);
 
 const EMPTY_ARRAY: AccountSelectBottomSheetSection[] = [];
 

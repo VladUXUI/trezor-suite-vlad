@@ -146,7 +146,7 @@ export const TransactionListHeader = memo(
                 },
             });
             navigation.navigate(RootStackRoutes.SendStack, {
-                screen: SendStackRoutes.SendOutputs,
+                screen: SendStackRoutes.SendAccounts,
                 params: {
                     accountKey,
                     tokenContract,

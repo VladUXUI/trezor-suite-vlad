@@ -13,6 +13,7 @@ import { useSendFormContext } from 'src/hooks/wallet';
 import { Address } from './Address';
 import { Amount } from './Amount/Amount';
 import { CardanoMinAmountInfo } from './CardanoMinAmountInfo';
+import { NetworkSelect } from './NetworkSelect/NetworkSelect';
 import { OpReturn } from './OpReturn';
 import { TokenSelect } from './TokenSelect/TokenSelect';
 import { TronNewAccountInfo } from './TronNewAccountInfo';
@@ -70,6 +71,7 @@ export const Outputs = ({ disableAnim }: OutputsProps) => {
         <Container $height={height || 0}>
             <div ref={ref}>
                 <Column gap={spacings.md}>
+                    <NetworkSelect />
                     {outputs.map((output, index) => (
                         <motion.div
                             key={output.id}
