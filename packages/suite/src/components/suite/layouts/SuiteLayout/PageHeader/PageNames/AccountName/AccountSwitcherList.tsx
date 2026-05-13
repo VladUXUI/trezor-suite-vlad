@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 
 import styled from 'styled-components';
 
+import { selectRouteName } from '@suite/router';
 import { useFormatters } from '@suite-common/formatters';
 import {
     type AccountGroup,
@@ -56,6 +57,7 @@ const AccountSwitcherItem = ({
 }) => {
     const baseCurrencyCode = useSelector(selectBaseCurrency);
     const currentFiatRates = useSelector(selectCurrentFiatRates);
+    const currentRouteName = useSelector(selectRouteName);
     const primaryAccount = getPrimaryAccount(group);
     const goToWithAnalytics = useGoToWithAnalytics(primaryAccount);
     const { BaseCurrencyAmountFormatter } = useFormatters();
@@ -79,8 +81,12 @@ const AccountSwitcherItem = ({
 
     const handleClick = () => {
         if (!isSelected) {
+            const targetRoute =
+                currentRouteName?.startsWith('wallet-') && currentRouteName !== 'wallet-index'
+                    ? currentRouteName
+                    : 'wallet-index';
             goToWithAnalytics({
-                routeName: 'wallet-index',
+                routeName: targetRoute,
                 params: {
                     symbol: primaryAccount.symbol,
                     accountIndex: primaryAccount.index,

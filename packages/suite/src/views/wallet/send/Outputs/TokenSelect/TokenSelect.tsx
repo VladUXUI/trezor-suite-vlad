@@ -117,120 +117,131 @@ export const TokenSelect = ({ outputId }: TokenSelectProps) => {
             )}
 
             <Card fillType="default" paddingType="normal" onClick={onOpenSelectAssetModal}>
-                <Row justifyContent="space-between" height={64}>
-                    <Row justifyContent="flex-start" gap={spacings.sm}>
-                        {selectedToken ? (
-                            <AssetLogo
-                                symbol={account.symbol}
-                                contractAddress={selectedToken?.contract}
-                                size={24}
-                                placeholder={selectedToken?.symbol || account.symbol}
-                                placeholderWithTooltip={false}
-                                shouldTryToFetch={isTokenKnown}
-                            />
-                        ) : (
-                            <CoinLogo symbol={account.symbol} size={36} type="tokenWithNetwork" />
-                        )}
-                        <Column alignItems="flex-start">
-                            <Row justifyContent="flex-start">
-                                <Text intent="neutral" typographyStyle="body-md">
-                                    {selectedToken?.name ||
-                                        getNetworkDisplaySymbolName(account.symbol)}
-                                </Text>
-                            </Row>
-                            <Row>
-                                <Text
-                                    intent="neutral"
-                                    priority="secondary"
-                                    typographyStyle="body-sm"
-                                >
-                                    <HiddenPlaceholder>
-                                        <FormattedCryptoAmount
-                                            value={
-                                                selectedToken?.balance || account.formattedBalance
-                                            }
-                                            symbol={selectedToken?.symbol ?? account.symbol}
-                                            contractAddress={selectedToken?.contract}
-                                            data-testid={tokenInputName}
-                                        />
-                                    </HiddenPlaceholder>{' '}
-                                    <BaseCurrencyValue
-                                        tokenAddress={selectedToken?.contract as TokenAddress}
-                                        amount={selectedToken?.balance || account.formattedBalance}
-                                        symbol={account.symbol}
-                                        showApproximationIndicator
-                                    />
-                                </Text>
-                            </Row>
-                            {networkTokenContractAddress && (
+                <Column gap={spacings.xs}>
+                    Asset
+                    <Row justifyContent="space-between" height={64}>
+                        <Row justifyContent="flex-start" gap={spacings.sm}>
+                            {selectedToken ? (
+                                <AssetLogo
+                                    symbol={account.symbol}
+                                    contractAddress={selectedToken?.contract}
+                                    size={24}
+                                    placeholder={selectedToken?.symbol || account.symbol}
+                                    placeholderWithTooltip={false}
+                                    shouldTryToFetch={isTokenKnown}
+                                />
+                            ) : (
+                                <CoinLogo
+                                    symbol={account.symbol}
+                                    size={36}
+                                    type="tokenWithNetwork"
+                                />
+                            )}
+                            <Column alignItems="flex-start">
                                 <Row justifyContent="flex-start">
+                                    <Text intent="neutral" typographyStyle="body-md">
+                                        {selectedToken?.name ||
+                                            getNetworkDisplaySymbolName(account.symbol)}
+                                    </Text>
+                                </Row>
+                                <Row>
                                     <Text
                                         intent="neutral"
                                         priority="secondary"
                                         typographyStyle="body-sm"
                                     >
-                                        <Row gap={spacings.xxs}>
-                                            <Translation
-                                                id={getTokenAddressTranslationId(
-                                                    account.networkType,
-                                                )}
+                                        <HiddenPlaceholder>
+                                            <FormattedCryptoAmount
+                                                value={
+                                                    selectedToken?.balance ||
+                                                    account.formattedBalance
+                                                }
+                                                symbol={selectedToken?.symbol ?? account.symbol}
+                                                contractAddress={selectedToken?.contract}
+                                                data-testid={tokenInputName}
                                             />
-                                            <Link
-                                                href={getTokenExplorerUrl(
-                                                    explorer,
-                                                    getNetwork(account.symbol).networkType,
-                                                    selectedToken,
-                                                )}
-                                                onClick={ev => ev.stopPropagation()}
-                                            >
-                                                <Address
-                                                    isTruncated
-                                                    value={networkTokenContractAddress}
-                                                    typographyStyle="body-sm"
-                                                    intent="neutral"
-                                                    priority="secondary"
-                                                    isCopyAllowed
-                                                    onCopy={() => {
-                                                        dispatch(
-                                                            shouldShowCopyAddressModal
-                                                                ? showCopyAddressModal(
-                                                                      networkTokenContractAddress,
-                                                                      'contract',
-                                                                  )
-                                                                : copyAddressToClipboard(
-                                                                      networkTokenContractAddress,
-                                                                  ),
-                                                        );
-                                                    }}
-                                                />
-                                            </Link>
-                                        </Row>
+                                        </HiddenPlaceholder>{' '}
+                                        <BaseCurrencyValue
+                                            tokenAddress={selectedToken?.contract as TokenAddress}
+                                            amount={
+                                                selectedToken?.balance || account.formattedBalance
+                                            }
+                                            symbol={account.symbol}
+                                            showApproximationIndicator
+                                        />
                                     </Text>
                                 </Row>
-                            )}
-                        </Column>
+                                {networkTokenContractAddress && (
+                                    <Row justifyContent="flex-start">
+                                        <Text
+                                            intent="neutral"
+                                            priority="secondary"
+                                            typographyStyle="body-sm"
+                                        >
+                                            <Row gap={spacings.xxs}>
+                                                <Translation
+                                                    id={getTokenAddressTranslationId(
+                                                        account.networkType,
+                                                    )}
+                                                />
+                                                <Link
+                                                    href={getTokenExplorerUrl(
+                                                        explorer,
+                                                        getNetwork(account.symbol).networkType,
+                                                        selectedToken,
+                                                    )}
+                                                    onClick={ev => ev.stopPropagation()}
+                                                >
+                                                    <Address
+                                                        isTruncated
+                                                        value={networkTokenContractAddress}
+                                                        typographyStyle="body-sm"
+                                                        intent="neutral"
+                                                        priority="secondary"
+                                                        isCopyAllowed
+                                                        onCopy={() => {
+                                                            dispatch(
+                                                                shouldShowCopyAddressModal
+                                                                    ? showCopyAddressModal(
+                                                                          networkTokenContractAddress,
+                                                                          'contract',
+                                                                      )
+                                                                    : copyAddressToClipboard(
+                                                                          networkTokenContractAddress,
+                                                                      ),
+                                                            );
+                                                        }}
+                                                    />
+                                                </Link>
+                                            </Row>
+                                        </Text>
+                                    </Row>
+                                )}
+                            </Column>
+                        </Row>
+                        {!hasNoStandardTokens && (
+                            <IconButton icon="caretDown" intent="neutral" priority="secondary" />
+                        )}
                     </Row>
-                    {!hasNoStandardTokens && (
-                        <IconButton icon="caretDown" intent="neutral" priority="secondary" />
+                    {isDeFiToken && (
+                        <Banner
+                            icon
+                            intent="info"
+                            title={
+                                <Translation
+                                    id="TR_DEFI_YIELD_TOKEN_BANNER_TITLE"
+                                    values={{
+                                        token: selectedToken?.symbol ?? account.symbol,
+                                    }}
+                                />
+                            }
+                            description={
+                                <Translation id="TR_DEFI_YIELD_TOKEN_BANNER_DESCRIPTION" />
+                            }
+                            margin={{ top: 16 }}
+                        />
                     )}
-                </Row>
-
-                {isDeFiToken && (
-                    <Banner
-                        icon
-                        intent="info"
-                        title={
-                            <Translation
-                                id="TR_DEFI_YIELD_TOKEN_BANNER_TITLE"
-                                values={{
-                                    token: selectedToken?.symbol ?? account.symbol,
-                                }}
-                            />
-                        }
-                        description={<Translation id="TR_DEFI_YIELD_TOKEN_BANNER_DESCRIPTION" />}
-                        margin={{ top: 16 }}
-                    />
-                )}
+                </Column>
             </Card>
         </>
     );

@@ -27,7 +27,7 @@ export const AccountSubpageName = ({ selectedAccount }: AccountSubpageNameProps)
                 onClick={handleBackClick}
                 data-testid="@account-subpage/back"
             />
-            <AccountDetails selectedAccount={selectedAccount} isBalanceShown />
+            <AccountDetails selectedAccount={selectedAccount} isBalanceShown={false} />
         </Row>
     );
 };

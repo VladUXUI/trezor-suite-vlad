@@ -45,7 +45,7 @@ const SwitcherTrigger = styled.button`
     background: ${({ theme }) => theme.elementFillNeutralSoft};
     border: none;
     padding: 4px 10px 4px 8px;
-    border-radius: 6px;
+    border-radius: 12px;
     cursor: pointer;
     color: inherit;
     font: inherit;
@@ -103,6 +103,7 @@ export const AccountDetails = ({ selectedAccount, isBalanceShown }: AccountDetai
 
     const { symbol, key, path, index, accountType, formattedBalance, deviceState, networkType } =
         selectedAccount;
+    const logoSymbol = networkType === 'ethereum' ? 'eth' : symbol;
     const { shallDisplayBaseCurrency } = useDisplayBaseCurrency(symbol);
 
     const defaultLabel = getDefaultAccountLabel({ accountType, symbol, index });
@@ -216,7 +217,7 @@ export const AccountDetails = ({ selectedAccount, isBalanceShown }: AccountDetai
                 <H2 typographyStyle={getTypographyStyle()}>
                     {isRenaming ? (
                         <Row gap={8} alignItems="center">
-                            <CoinLogo size={36} symbol={symbol} type="token" />
+                            <CoinLogo size={36} symbol={logoSymbol} type="token" />
                             {labelingElement}
                         </Row>
                     ) : (
@@ -235,7 +236,7 @@ export const AccountDetails = ({ selectedAccount, isBalanceShown }: AccountDetai
                                 type="button"
                                 data-testid="@wallet/account/switcher-trigger"
                             >
-                                <CoinLogo size={36} symbol={symbol} type="token" />
+                                <CoinLogo size={36} symbol={logoSymbol} type="token" />
                                 <TriggerLabel>{label}</TriggerLabel>
                                 <AccountTypeBadge
                                     accountType={accountType}
