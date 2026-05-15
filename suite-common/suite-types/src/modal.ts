@@ -248,4 +248,7 @@ export type UserContextPayload =
           type: 'delete-contact';
           id: string;
           label: string;
+      }
+    | {
+          type: 'demo-sign-blocked';
       };

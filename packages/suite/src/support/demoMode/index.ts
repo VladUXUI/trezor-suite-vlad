@@ -1,0 +1,13 @@
+export { demoStatePatch } from './demoState';
+export {
+    DEMO_DEVICE_ID,
+    DEMO_DEVICE_STATE,
+    DEMO_DEVICE_PATH,
+    DEMO_DEVICE_LABEL,
+    DEMO_EVM_DESCRIPTOR,
+    DEMO_EVM_DESCRIPTOR_1,
+    DEMO_EVM_DESCRIPTOR_2,
+    DEMO_EVM_DESCRIPTOR_3,
+    DEMO_BTC_DESCRIPTOR,
+    DEMO_SOL_DESCRIPTOR,
+} from './demoConstants';

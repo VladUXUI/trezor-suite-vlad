@@ -1,10 +1,11 @@
 import { createBrowserHistory } from 'history';
 
 import { initStore } from 'src/reducers/store';
+import { demoStatePatch } from 'src/support/demoMode';
 import { type PreloadStoreAction } from 'src/support/suite/preloadStore';
 
 export const createSuiteWebCompositionRoot = (preloadStoreAction?: PreloadStoreAction) => {
     const history = createBrowserHistory();
 
-    return initStore({ history }, preloadStoreAction);
+    return initStore({ history }, preloadStoreAction, { statePatch: demoStatePatch });
 };

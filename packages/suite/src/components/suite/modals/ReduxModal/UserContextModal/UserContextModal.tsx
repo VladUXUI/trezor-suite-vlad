@@ -42,6 +42,7 @@ import { ConnectLoadingModal } from './ConnectLoadingModal';
 import { ConnectPermissionsModal } from './ConnectPermissionsModal';
 import { CriticalCoinjoinPhaseModal } from './CriticalCoinjoinPhaseModal/CriticalCoinjoinPhaseModal';
 import { DeleteContactModal } from './DeleteContactModal';
+import { DemoSignBlockedModal } from './DemoSignBlockedModal';
 import { DeviceAuthenticityOptOutModal } from './DeviceAuthenticityOptOutModal';
 import { DisableTorModal } from './DisableTorModal';
 import { DisableTorStopCoinjoinModal } from './DisableTorStopCoinjoinModal';
@@ -202,6 +203,8 @@ export const UserContextModal = ({ payload }: ReduxModalProps<typeof MODAL_CONTE
             return <AddContactModal {...payload} onCancel={onCancel} />;
         case 'delete-contact':
             return <DeleteContactModal {...payload} onCancel={onCancel} />;
+        case 'demo-sign-blocked':
+            return <DemoSignBlockedModal />;
         default:
             return exhaustive(payload);
     }

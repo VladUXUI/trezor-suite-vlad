@@ -143,7 +143,11 @@ export const initStore = (
     const patchedState =
         preloadedState && options?.statePatch && patchConfirm(options.statePatch)
             ? mergeDeepObject.withOptions(
-                  { dotNotation: true },
+                  // `mergeArrays: false` makes the patch REPLACE arrays (accounts,
+                  // devices, transactions[key], ...) instead of concatenating with
+                  // whatever STORAGE.LOAD restored — without this the demo seed
+                  // duplicates on every page reload.
+                  { dotNotation: true, mergeArrays: false },
                   preloadedState,
                   options.statePatch as Partial<AppState>,
               )
